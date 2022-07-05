@@ -8,7 +8,7 @@
 #include <stdio.h>
 
 void solution1();
-//void solution2();
+void solution2();
 //void solution3();
 void menu();
 
@@ -25,9 +25,9 @@ void menu() {
         case 1:
             solution1();
             break;
-//        case 2:
-//            solution2();
-//            break;
+        case 2:
+            solution2();
+            break;
 //        case 3:
 //            solution3();
 //            break;
@@ -38,12 +38,7 @@ void menu() {
 }
 
 int toBinary(int decimalNum) {
-    
-    
-    
-    
     if (decimalNum == 1) {
-
         return decimalNum % 2;
     } else {
         int binaryNum = 10 * toBinary(decimalNum / 2) + decimalNum % 2;
@@ -58,6 +53,51 @@ void solution1() {
     printf("Input decimal number: \n");
     scanf("%d", &decimalNum);
     int binaryNum = toBinary(decimalNum);
-    printf("%d", binaryNum);
+    printf("Binary - %d\n", binaryNum);
+}
+
+int recursionDegree(int result, int degree) {
+    if (degree > 1) {
+        return result * recursionDegree(result, degree - 1);
+    } else {
+        return result;
+    }
+}
+
+void solution2() {
+    printf("Solution 2:\n");
     
+    int methodNumber;
+    printf("Choose method (1..3):\n");
+    printf("1 - without recusion\n");
+    printf("2 - with recusion\n");
+    printf("3 - with recusion and even degree property\n");
+    scanf("%d", &methodNumber);
+    
+    int number;
+    printf("Input number:\n");
+    scanf("%d", &number);
+    int degree;
+    printf("Input degree:\n");
+    scanf("%d", &degree);
+    int result = 1;
+    
+    switch (methodNumber) {
+        case 1:
+            while (degree > 0) {
+                result *= number;
+                degree--;
+            }
+            break;
+        case 2:
+            result = recursionDegree(number, degree);
+            break;
+        case 3:
+            
+            break;
+        default:
+            break;
+    }
+    
+    printf("Result - %d\n", result);
 }
