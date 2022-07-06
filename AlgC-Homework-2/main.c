@@ -9,7 +9,7 @@
 
 void solution1();
 void solution2();
-//void solution3();
+void solution3();
 void menu();
 
 int main(int argc, const char * argv[]) {
@@ -28,9 +28,9 @@ void menu() {
         case 2:
             solution2();
             break;
-//        case 3:
-//            solution3();
-//            break;
+        case 3:
+            solution3();
+            break;
         default:
             printf("Wrong solution number!");
             break;
@@ -56,9 +56,30 @@ void solution1() {
     printf("Binary - %d\n", binaryNum);
 }
 
+int noRecursionDegree(int number, int degree) {
+    int result = 1;
+    while (degree > 0) {
+        result *= number;
+        degree--;
+    }
+    return result;
+}
+
 int recursionDegree(int result, int degree) {
     if (degree > 1) {
         return result * recursionDegree(result, degree - 1);
+    } else {
+        return result;
+    }
+}
+
+int recursionDegreeWithDivision(int result, int degree) {
+    if (degree > 1) {
+        if (degree % 2 == 0) {
+            return recursionDegree(result, degree / 2) * recursionDegree(result, degree / 2);
+        } else {
+            return result * recursionDegree(result, degree - 1);
+        }
     } else {
         return result;
     }
@@ -84,20 +105,39 @@ void solution2() {
     
     switch (methodNumber) {
         case 1:
-            while (degree > 0) {
-                result *= number;
-                degree--;
-            }
+            result = noRecursionDegree(number, degree);
             break;
         case 2:
             result = recursionDegree(number, degree);
             break;
         case 3:
-            
+            result = recursionDegreeWithDivision(number, degree);
             break;
         default:
             break;
     }
     
     printf("Result - %d\n", result);
+}
+
+int doSomething(int startNumber, int endNumber) {
+    if (startNumber == endNumber) {
+        return 1;
+    } else if (startNumber > endNumber) {
+        return 0;
+    } else {
+        return doSomething(startNumber + 1, endNumber) + doSomething(startNumber * 2, endNumber);
+    }
+}
+
+void solution3() {
+    printf("Solution 3:\n");
+    
+    int startNumber = 3;
+    int endNumber = 20;
+    printf("Start number - %d\n", startNumber);
+    printf("End number - %d\n", endNumber);
+    
+    int result = doSomething(startNumber, endNumber);
+    printf("Number of programs - %d\n", result);
 }
